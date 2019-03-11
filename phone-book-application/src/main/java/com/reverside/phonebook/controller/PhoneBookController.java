@@ -24,24 +24,21 @@ import com.reverside.phonebook.model.PhoneBook;
 import com.reverside.phonebook.model.Search;
 import com.reverside.phonebook.repository.EntryRepository;
 import com.reverside.phonebook.repository.PhoneBookRepository;
+import com.reverside.phonebook.service.EntryService;
 import com.reverside.phonebook.service.PhoneBookService;
 
 @Controller
 public class PhoneBookController {
-
-	private PhoneBookRepository bookRepository;
-
-	private EntryRepository entryRepository;
 	
-	private PhoneBookService phoneBookService;
+	private PhoneBookService bookService;
+	
+	private EntryService entryService;
 
 	@Autowired
-	public PhoneBookController(PhoneBookRepository bookRepository, 
-			EntryRepository entryRepository, 
-			PhoneBookService phoneBookService) {
-		this.bookRepository = bookRepository;
-		this.entryRepository = entryRepository;
-		this.phoneBookService = phoneBookService;
+	public PhoneBookController(PhoneBookService phoneBookService,
+			EntryService entryService) {
+		this.bookService = phoneBookService;
+		this.entryService = entryService;
 	}
 
 	@GetMapping({ "/", "/home", "/index" })
@@ -56,7 +53,7 @@ public class PhoneBookController {
 	public String getPhoneBooks(Model model, @RequestParam(defaultValue = "0")int page) {
 
 		Pageable requestedPage = PageRequest.of(page, 3);
-		Page<PhoneBook> phoneBooks = bookRepository.findAll(requestedPage);
+		Page<PhoneBook> phoneBooks = bookService.findAll(requestedPage);
 		model.addAttribute("phoneBooks", phoneBooks);
 		model.addAttribute("currentPage", page);
 		model.addAttribute("phoneBook", new PhoneBook());
@@ -67,14 +64,14 @@ public class PhoneBookController {
 
 	@PostMapping("/phone-books/add")
 	public String addPhoneBook(@Valid PhoneBook phoneBook) {
-		bookRepository.save(phoneBook);
+		bookService.save(phoneBook);
 		return "redirect:/phone-books";
 	}
 
 	@GetMapping("/phone-books/findOne")
 	@ResponseBody
 	public PhoneBook getPhoneBook(Long id, Model model) {
-		return bookRepository.findById(id).get();
+		return bookService.findById(id).get();
 	}
 
 	@GetMapping("/phone-books/view/{phoneBookId}")
@@ -83,9 +80,9 @@ public class PhoneBookController {
 
 		List<Entry> blankEntries = new ArrayList<>();
 
-		entries = entryRepository.findByPhoneBookId(phoneBookId).orElse(blankEntries);
+		entries = entryService.findByPhoneBookId(phoneBookId).orElse(blankEntries);
 
-		PhoneBook tempPhoneBook = bookRepository.getOne(phoneBookId);
+		PhoneBook tempPhoneBook = bookService.getOne(phoneBookId);
 
 		model.addAttribute("phoneBook", tempPhoneBook);
 
@@ -103,28 +100,28 @@ public class PhoneBookController {
 	@GetMapping("/phone-books/entries/findOne")
 	@ResponseBody
 	public Entry getEntry(Long id) {
-		return entryRepository.findById(id).get();
+		return entryService.findById(id).get();
 	}
 
 	@PostMapping("/phone-books/entries")
 	public String addEntry(@Valid Entry entry) {
-		entryRepository.save(entry);
+		entryService.save(entry);
 		return "redirect:/phone-books/view/" + entry.getPhoneBookId();
 	}
 
 	@GetMapping("/phone-books/entries/delete/{entryId}")
 	public String deleteEntry(@PathVariable Long entryId) {
-		Entry entry = entryRepository.findById(entryId)
+		Entry entry = entryService.findById(entryId)
 				.orElseThrow(() -> new ResourceNotFoundException("Entry", "id", entryId));
-		entryRepository.delete(entry);
+		entryService.delete(entry);
 		return "redirect:/phone-books/view/" + entry.getPhoneBookId();
 	}
 
 	@GetMapping("/phone-books/delete/{phoneBookId}")
 	public String deletePhoneBook(@PathVariable Long phoneBookId) {
-		PhoneBook phoneBook = bookRepository.findById(phoneBookId)
+		PhoneBook phoneBook = bookService.findById(phoneBookId)
 				.orElseThrow(() -> new ResourceNotFoundException("PhoneBook", "id", phoneBookId));
-		bookRepository.delete(phoneBook);
+		bookService.delete(phoneBook);
 		return "redirect:/phone-books";
 	}
 
@@ -137,7 +134,7 @@ public class PhoneBookController {
 
 		List<Entry> blankEntries = new ArrayList<>();
 
-		entries = entryRepository.findByNameLike(name).orElse(blankEntries);
+		entries = entryService.findByNameLike(name).orElse(blankEntries);
 
 
 		model.addAttribute("description", "List of Phone book entries");
@@ -155,7 +152,7 @@ public class PhoneBookController {
 
 		List<Entry> blankEntries = new ArrayList<>();
 
-		entries = entryRepository.findByPhoneNumberLike(phoneNumber).orElse(blankEntries);
+		entries = entryService.findByPhoneNumberLike(phoneNumber).orElse(blankEntries);
 
 
 		model.addAttribute("description", "List of Phone book entries");
