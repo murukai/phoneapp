@@ -1,0 +1,29 @@
+
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: header">
+</head>
+<body>
+
+	<div th:replace="template :: nav-bar"></div>
+	</br>
+	<div class="container">
+		<div class="row">
+			<div class="col col-md-12">
+				<div th:replace="template :: jumbotron"></div>
+				<div class="row">
+					<div class="col col-md-12">
+						<a class="btn btn-primary btn-lg" th:href="@{/phone-books}"
+							role="button">Phone Books</a>
+					</div>
+				</div>
+				<div th:replace="template :: searchName"></div>
+				<div th:replace="template :: searchPhoneNumber"></div>
+			</div>
+		</div>
+	</div>
+	<div th:replace="template :: footer"></div>
+
+	<div th:replace="template :: scripts"></div>
+</body>
+</html>

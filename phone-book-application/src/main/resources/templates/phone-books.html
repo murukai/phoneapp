@@ -1,0 +1,160 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: header"></head>
+<body>
+
+	<div th:replace="template :: nav-bar"></div>
+	</br>
+	<div class="container">
+
+		<div th:replace="template :: jumbotron"></div>
+		<div th:replace="template :: searchName"></div>
+		<div th:replace="template :: searchPhoneNumber"></div>
+		<div class="row">
+			<table class="table table-stripped" id="phoneBookTable">
+				<thead>
+					<tr>
+						<th>ID</th>
+						<th>Name</th>
+						<th>Description</th>
+						<th>Date Created</th>
+						<th>Edit</th>
+						<th>View</th>
+						<th>Del</th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:if="${phoneBooks.empty}">
+						<td colspan="2">No Journals Available</td>
+					</tr>
+					<tr th:each="phoneBook : ${phoneBooks.content}">
+						<td><span th:text="${phoneBook.id}"></span></td>
+						<td><span th:text="${phoneBook.name}"> name </span></td>
+						<td><span th:text="${phoneBook.description}">
+								Description </span></td>
+						<td><span th:text="${phoneBook.created}"> Date Created
+						</span></td>
+						<td><a class="btn btn-primary editBtn"
+							th:href="@{/phone-books/findOne/(id=${phoneBook.id})}">edit</a></td>
+						<td><a class="btn btn-primary "
+							th:href="@{'/phone-books/view/'+${phoneBook.id}}">view</a></td>
+						<td><a class="btn btn-primary "
+							th:href="@{'/phone-books/delete/'+${phoneBook.id}}">del</a></td>
+					</tr>
+					<tr>
+						<td><a class="btn btn-primary btn-lg addBtn">Add
+								PhoneBook</a></td>
+					</tr>
+				</tbody>
+			</table>
+			<hr>
+			<ul class="nav nav-pills">
+				<li class="nav-item"
+					th:each="i : ${#numbers.sequence(0,phoneBooks.totalPages - 1)}">
+					<a th:href="@{/phone-books/(page=${i})}" 
+						th:text="${i}" class="nav-link"
+						th:classappend="${currentPage} == ${i}?'active':''"></a>
+				</li>
+
+			</ul>
+
+		</div>
+
+		<!-- Phone Book modal here -->
+		<div class="addPhoneBook">
+			<form th:action="@{/phone-books/add}" method="post">
+				<div class="modal fade" id="addPhoneBook" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Phone Book</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<input type="hidden" id="id" name="id" />
+								<div class="form-group">
+									<label class="form-control-label" for="name">Name : </label> <input
+										type="text" class="form-control" id="name" name="name"
+										value="" />
+									<div class="invalid-feedback">Please provide a name which
+										has a maximum of 100 characters</div>
+								</div>
+								<div class="form-group">
+									<label for="description" class="col-form-label">Description
+										: </label>
+									<textarea class="form-control" id="description"
+										name="description"></textarea>
+								</div>
+								<div class="form-group">
+									<label class="form-control-label" for="created">Date
+										Created</label> <input type="text" class="form-control" id="created"
+										name="created" value="" placeholder="yyyy-MM-dd" />
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Close</button>
+								<input type="submit" class="btn btn-primary" value="Save" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+		<!-- Phone Book modal here -->
+		<div class="editPhoneBook">
+			<form th:action="@{/phone-books/add}" method="post">
+				<div class="modal fade" id="addPhoneBook" tabindex="-1"
+					role="dialog" aria-labelledby="exampleModalLabel"
+					aria-hidden="true">
+					<div class="modal-dialog" role="document">
+						<div class="modal-content">
+							<div class="modal-header">
+								<h5 class="modal-title" id="exampleModalLabel">Phone Book</h5>
+								<button type="button" class="close" data-dismiss="modal"
+									aria-label="Close">
+									<span aria-hidden="true">&times;</span>
+								</button>
+							</div>
+							<div class="modal-body">
+								<input type="hidden" id="id" name="id" />
+								<div class="form-group">
+									<label class="form-control-label" for="name">Name : </label> <input
+										type="text" class="form-control" id="name" name="name"
+										value="" />
+									<div class="invalid-feedback">Please provide a name which
+										has a maximum of 100 characters</div>
+								</div>
+								<div class="form-group">
+									<label for="description" class="col-form-label">Description
+										: </label>
+									<textarea class="form-control" id="description"
+										name="description"></textarea>
+								</div>
+								<div class="form-group">
+									<label class="form-control-label" for="created">Date
+										Created</label> <input type="text" class="form-control" id="created"
+										name="created" value="" placeholder="yyyy-MM-dd" />
+								</div>
+							</div>
+							<div class="modal-footer">
+								<button type="button" class="btn btn-secondary"
+									data-dismiss="modal">Close</button>
+								<input type="submit" class="btn btn-primary" value="Save" />
+							</div>
+						</div>
+					</div>
+				</div>
+			</form>
+		</div>
+	</div>
+	<div th:replace="template :: footer"></div>
+	<div th:replace="template :: scripts"></div>
+
+</body>
+</html>

@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<div th:replace="template :: header"></div>
+<body>
+	<nav th:fragment="nav-bar" class="navbar navbar-expand-sm bg-dark">
+		<div class="container">
+			<!-- Links -->
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" th:href="@{/home}">Home</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+	<div class="container">
+		<div th:fragment="jumbotron" class="jumbotron">
+			<h1 class="display-4">403</h1>
+			<p class="lead">An Error has occurred</p>
+			<hr class="my-4">
+			<p>
+				<span>You are not authorized to view this page!!</span>
+			</p>
+
+		</div>
+	</div>
+	<div th:replace="template :: footer"></div>
+	<div th:replace="template :: scripts"></div>
+</body>
+</html>

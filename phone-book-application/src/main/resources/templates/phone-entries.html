@@ -1,0 +1,125 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="template :: header"></head>
+<body>
+
+	<script>
+		window.phoneBookId = '${phoneBook.id}';
+		console.log(window.phoneBookId);
+	</script>
+	<div th:replace="template :: nav-bar"></div>
+
+		</br>
+	<div class="container">
+
+		<div th:replace="template :: jumbotron"></div>
+		
+		<div th:replace="template :: searchName"></div>
+		<div th:replace="template :: searchPhoneNumber"></div>
+		
+		<table class="table table-stripped entryTable">
+			<thead>
+				<tr>
+					<th>ID</th>
+					<th>Name</th>
+					<th>Phone Number</th>
+					<th>Date Created</th>
+					<th>Edit</th>
+				</tr>
+			</thead>
+			<tbody>
+				<tr th:if="${entries.empty}">
+					<td colspan="2">No entries available in this phone book</td>
+				</tr>
+				<tr th:each="entry : ${entries}">
+					<td><span th:text="${entry.id}"></span></td>
+					<td><span th:text="${entry.name}"> name </span></td>
+					<td><span th:text="${entry.phoneNumber}"> Phone Number </span></td>
+					<td><span th:text="${entry.created}"> Date Created </span></td>
+					<td><a class="btn btn-primary editEntryBtn" th:href="@{/phone-books/entries/findOne/(id=${entry.id})}">edit entry</a></td>
+					
+				</tr>
+				<tr>
+					<td><a class="btn btn-primary btn-lg addEntryBtn">Add Entry</a></td>
+				</tr>
+			</tbody>
+		</table>
+		<!-- Modal -->
+		<div class="addEntry">
+		<form th:action="@{/phone-books/entries}" method="post">
+		<div class="modal fade" id="addEntry" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Phone Book Entry</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		       	 <input type="hidden" id="id" name="id" />
+		       	 <input type="hidden" name="phoneBookId" th:value="${phoneBook.id}"/>
+		       	<div class="form-group">
+		       		<label class="form-control-label" for="name">Name : </label>
+		       		<input type="text" class="form-control" id="name" name="name" value="" />
+		       	</div>
+		       	<div class="form-group">
+            		<label for="phoneNumber" class="col-form-label">Phone Number : </label>
+            		<input class="form-control" id="phoneNumber" name="phoneNumber"></input>
+          		</div>
+          		<div class="form-group">
+		       		<label class="form-control-label" for="created">Date Created</label>
+		       		<input type="text" class="form-control" id="created" name="created" value="" placeholder="yyyy-MM-dd"/>
+		       	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <input type="submit" class="btn btn-primary" value="Save"/>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		</form>
+		</div>
+		<!-- Modal -->
+		<div class="editEntry">
+		<form th:action="@{/phone-books/entries}" method="post">
+		<div class="modal fade" id="addEntry" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
+		  <div class="modal-dialog" role="document">
+		    <div class="modal-content">
+		      <div class="modal-header">
+		        <h5 class="modal-title" id="exampleModalLabel">Phone Book Entry</h5>
+		        <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+		          <span aria-hidden="true">&times;</span>
+		        </button>
+		      </div>
+		      <div class="modal-body">
+		       	 <input type="hidden" id="id" name="id" />
+		       	 <input type="hidden" name="phoneBookId" th:value="${phoneBook.id}"/>
+		       	<div class="form-group">
+		       		<label class="form-control-label" for="name">Name : </label>
+		       		<input type="text" class="form-control" id="name" name="name" value="" />
+		       	</div>
+		       	<div class="form-group">
+            		<label for="phoneNumber" class="col-form-label">Phone Number : </label>
+            		<input class="form-control" id="phoneNumber" name="phoneNumber"></input>
+          		</div>
+          		<div class="form-group">
+		       		<label class="form-control-label" for="created">Date Created</label>
+		       		<input type="text" class="form-control" id="created" name="created" value="" placeholder="yyyy-MM-dd"/>
+		       	</div>
+		      </div>
+		      <div class="modal-footer">
+		        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+		        <input type="submit" class="btn btn-primary" value="Save"/>
+		      </div>
+		    </div>
+		  </div>
+		</div>
+		</form>
+		</div>
+	</div>
+	<div th:replace="template :: footer"></div>
+	<div th:replace="template :: scripts"></div>
+</body>
+</html>

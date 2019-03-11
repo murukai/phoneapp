@@ -1,0 +1,179 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:fragment="header">
+<title>Phone Book Application</title>
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/bootstrap/bootstrap.min.css}" />
+<link rel="stylesheet" type="text/css"
+	th:href="@{/css/footer/footer.css}" />
+</head>
+
+<body>
+
+	<nav th:fragment="nav-bar" class="navbar navbar-expand-sm bg-dark">
+		<div class="container">
+			<!-- Links -->
+			<ul class="navbar-nav">
+				<li class="nav-item"><a class="nav-link" th:href="@{/home}">Home</a>
+				</li>
+				<li class="nav-item"><a class="nav-link"
+					th:href="@{/phone-books}">Books</a></li>
+				<li class="nav-item"><a class="nav-link" th:href="@{/profile}">Profile</a>
+				</li>
+				<li class="nav-item float-right"><a class="nav-link" th:href="@{/logout}">logout</a>
+				</li>
+			</ul>
+		</div>
+	</nav>
+
+	<div th:fragment="jumbotron" class="jumbotron">
+		<h1 class="display-4">Phone Book Application</h1>
+		<p class="lead">This is a simple hero unit, a simple application
+			calling extra attention.Your phone book need to be safe.</p>
+		<hr class="my-4">
+		<p>
+			<span th:text="'Description: ' + ${description}"></span>
+		</p>
+
+	</div>
+	<div th:fragment="searchName">
+		</br>
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-10 col-lg-8">
+				<form th:action="@{/phone-books/search/name}" method="post" th:object="${search}">
+					<div class="card-body row no-gutters align-items-center">
+						<div class="col-auto">
+							<i class="fas fa-search h4 text-body"></i>
+						</div>
+						<!--end of col-->
+						<div class="col">
+							<input class="form-control form-control-md form-control-borderless"
+								type="text" th:field="*{name}" placeholder="Search by name of contact">
+						</div>
+						<!--end of col-->
+						<div class="col-auto">
+							<button class="btn btn-md btn-success" type="submit">Search</button>
+						</div>
+						<!--end of col-->
+					</div>
+				</form>
+			</div>
+			<!--end of col-->
+		</div>
+		</br>
+	</div>
+	
+	<div th:fragment="searchPhoneNumber">
+		</br>
+		<div class="row justify-content-center">
+			<div class="col-12 col-md-10 col-lg-8">
+				<form th:action="@{/phone-books/search/phoneNumber}" method="post" th:object="${search}">
+					<div class="card-body row no-gutters align-items-center">
+						<div class="col-auto">
+							<i class="fas fa-search h4 text-body"></i>
+						</div>
+						<!--end of col-->
+						<div class="col">
+							<input class="form-control form-control-md form-control-borderless"
+								type="text" th:field="*{phoneNumber}" placeholder="Search by phone number">
+						</div>
+						<!--end of col-->
+						<div class="col-auto">
+							<button class="btn btn-md btn-success" type="submit">Search</button>
+						</div>
+						<!--end of col-->
+					</div>
+				</form>
+			</div>
+			<!--end of col-->
+		</div>
+		</br>
+
+	</div>
+
+	<footer class="footer" th:fragment="footer">
+		<div class="container bottom_border">
+			<div class="row">
+				<div class=" col-sm-4 col-md col-sm-4  col-12 col">
+					<h5 class="headin5_amrc col_white_amrc pt2">Find us</h5>
+					<!--headin5_amrc-->
+					<p class="mb10">Please contact our team on :</p>
+					<p>
+						<i class="fa fa-location-arrow"></i> 9878/25 sec 9 rohini 35
+					</p>
+					<p>
+						<i class="fa fa-phone"></i> +91-9999878398
+					</p>
+					<p>
+						<i class="fa fa fa-envelope"></i> info@example.com
+					</p>
+
+
+				</div>
+
+				<div class=" col-sm-4 col-md  col-12 col">
+					<h5 class="headin5_amrc col_white_amrc pt2">Follow us</h5>
+					<!--headin5_amrc ends here-->
+
+					<ul class="footer_ul2_amrc">
+						<li><a href="#"><i
+								class="fab fa-twitter fleft padding-right"></i> </a>
+							<p>
+								Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a>
+							</p></li>
+						<li><a href="#"><i
+								class="fab fa-twitter fleft padding-right"></i> </a>
+							<p>
+								Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a>
+							</p></li>
+						<li><a href="#"><i
+								class="fab fa-twitter fleft padding-right"></i> </a>
+							<p>
+								Lorem Ipsum is simply dummy text of the printing...<a href="#">https://www.lipsum.com/</a>
+							</p></li>
+					</ul>
+					<!--footer_ul2_amrc ends here-->
+				</div>
+			</div>
+		</div>
+
+
+		<div class="container">
+			<ul class="foote_bottom_ul_amrc">
+				<li><a href="http://kalarikendramdelhi.com">Home</a></li>
+				<li><a href="http://kalarikendramdelhi.com">Phone Books</a></li>
+				<li><a href="http://kalarikendramdelhi.com">Entries</a></li>
+				<li><a href="http://kalarikendramdelhi.com">Profile</a></li>
+			</ul>
+			<!--foote_bottom_ul_amrc ends here-->
+			<p class="text-center">
+				Copyright @2019 | Designed With by <a href="#">Reverside
+					Software Solutions</a>
+			</p>
+
+			<ul class="social_footer_ul">
+				<li><a href="http://kalarikendramdelhi.com"><i
+						class="fab fa-facebook-f"></i></a></li>
+				<li><a href="http://kalarikendramdelhi.com"><i
+						class="fab fa-twitter"></i></a></li>
+				<li><a href="http://kalarikendramdelhi.com"><i
+						class="fab fa-linkedin"></i></a></li>
+				<li><a href="http://kalarikendramdelhi.com"><i
+						class="fab fa-instagram"></i></a></li>
+			</ul>
+			<!--social_footer_ul ends here-->
+		</div>
+
+	</footer>
+	<div th:fragment="scripts">
+		<!-- /.container -->
+		<script type="text/javascript" th:src="@{/js/jquery/jquery.js}"></script>
+		<script type="text/javascript" th:src="@{/js/main.js}"></script>
+		<script type="text/javascript"
+			th:src="@{/js/bootstrap/bootstrap.min.js}"></script>
+	</div>
+</body>
+
+</html>
